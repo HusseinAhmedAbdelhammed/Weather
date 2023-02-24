@@ -1,4 +1,4 @@
-package com.example.domain.entity.onecall
+package com.example.domain.entity.weather
 
 data class WeatherResponse(
     val base: String,
@@ -9,6 +9,7 @@ data class WeatherResponse(
     val id: Int,
     val main: Main,
     val name: String,
+    val rain: Rain,
     val sys: Sys,
     val timezone: Int,
     val visibility: Int,

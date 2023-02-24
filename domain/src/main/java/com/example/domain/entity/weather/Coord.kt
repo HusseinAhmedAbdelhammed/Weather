@@ -1,4 +1,4 @@
-package com.example.domain.entity.onecall
+package com.example.domain.entity.weather
 
 data class Coord(
     val lat: Double,
