@@ -1,5 +1,6 @@
 package com.example.weather.di
 
+import com.example.data.local.FavDatabase
 import com.example.data.remote.ApiService
 import com.example.data.repo.WeatherRepoImplementation
 import com.example.domain.repo.WeatherRepo
@@ -12,7 +13,7 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object RepoModule {
     @Provides
-    fun provideRepo(apiService: ApiService):WeatherRepo{
-        return WeatherRepoImplementation(apiService)
+    fun provideRepo(apiService: ApiService,favDB:FavDatabase):WeatherRepo{
+        return WeatherRepoImplementation(apiService,favDB)
     }
 }
