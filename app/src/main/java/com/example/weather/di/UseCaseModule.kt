@@ -11,7 +11,7 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
-    
+
     @Provides
     fun provideUseCaseWeath(weatherRepo: WeatherRepo,lat:Double,lon:Double,unit:String,lang:String,apiKey:String):GetWeather{
         return GetWeather(weatherRepo,lat,lon,unit,lang,apiKey)
