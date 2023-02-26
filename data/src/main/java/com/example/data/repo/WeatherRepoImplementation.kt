@@ -13,10 +13,9 @@ class WeatherRepoImplementation(private val apiService: ApiService,private val f
     override fun getWeatherFromRemote(
         lat: Double,
         lon: Double,
-        units: String,
         lang: String,
         apiKey: String
-    ): WeatherResponse =apiService.getWeather(lat,lon,units,lang,apiKey)
+    ): WeatherResponse =apiService.getWeather(lat,lon,lang,apiKey)
 
     override fun getForcastFromRemote(lat: Double, lon: Double, apiKey: String): ForcastResponse = apiService.getForcast(lat,lon,apiKey)
     override fun getFavFromLocal(): List<FavDomainEntity> {
