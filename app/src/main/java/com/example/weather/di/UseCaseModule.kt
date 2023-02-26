@@ -1,8 +1,8 @@
 package com.example.weather.di
 
+import com.example.domain.entity.fakeentity.FavDomainEntity
 import com.example.domain.repo.WeatherRepo
-import com.example.domain.usecase.GetForcast
-import com.example.domain.usecase.GetWeather
+import com.example.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,5 +19,17 @@ object UseCaseModule {
     @Provides
     fun provideUseCaseForeCast(weatherRepo: WeatherRepo,lat: Double,lon: Double,apiKey: String):GetForcast{
         return GetForcast(weatherRepo,lat,lon,apiKey)
+    }
+    @Provides
+    fun provideUseCaseGetFav(weatherRepo: WeatherRepo):GetFav{
+        return GetFav(weatherRepo)
+    }
+    @Provides
+    fun provideUseCaseAddFav(weatherRepo: WeatherRepo,fav:FavDomainEntity):AddFav{
+        return AddFav(weatherRepo, fav)
+    }
+    @Provides
+    fun provideUseCaseDelFav(weatherRepo: WeatherRepo,fav: FavDomainEntity):DelFav{
+        return DelFav(weatherRepo, fav)
     }
 }
