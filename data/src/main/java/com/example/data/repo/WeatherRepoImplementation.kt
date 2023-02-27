@@ -10,23 +10,23 @@ import com.example.domain.entity.weather.WeatherResponse
 import com.example.domain.repo.WeatherRepo
 
 class WeatherRepoImplementation(private val apiService: ApiService,private val favDB:FavDatabase):WeatherRepo {
-    override fun getWeatherFromRemote(
+    override suspend fun getWeatherFromRemote(
         lat: Double,
         lon: Double,
         lang: String,
         apiKey: String
     ): WeatherResponse =apiService.getWeather(lat,lon,lang,apiKey)
 
-    override fun getForcastFromRemote(lat: Double, lon: Double, apiKey: String): ForcastResponse = apiService.getForcast(lat,lon,apiKey)
-    override fun getFavFromLocal(): List<FavDomainEntity> {
+    override suspend fun getForcastFromRemote(lat: Double, lon: Double, apiKey: String): ForcastResponse = apiService.getForcast(lat,lon,apiKey)
+    override suspend fun getFavFromLocal(): List<FavDomainEntity> {
        return FavMapper.mapListFromEntity(favDB.favDao().getAllFav())
     }
 
-    override fun addFav(fav: FavDomainEntity) {
+    override suspend fun addFav(fav: FavDomainEntity) {
         favDB.favDao().addFav(FavMapper.mapToEntity(fav))
     }
 
-    override fun deleteFav(fav: FavDomainEntity) {
+    override suspend fun deleteFav(fav: FavDomainEntity) {
        favDB.favDao().deleteFav(FavMapper.mapToEntity(fav))
     }
 

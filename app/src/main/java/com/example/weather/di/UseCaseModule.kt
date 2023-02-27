@@ -13,23 +13,23 @@ import dagger.hilt.components.SingletonComponent
 object UseCaseModule {
 
     @Provides
-    fun provideUseCaseWeath(weatherRepo: WeatherRepo,lat:Double,lon:Double,unit:String,lang:String,apiKey:String):GetWeather{
-        return GetWeather(weatherRepo,lat,lon,unit,lang,apiKey)
+    fun provideUseCaseWeath(weatherRepo: WeatherRepo):GetWeather{
+        return GetWeather(weatherRepo)
     }
     @Provides
-    fun provideUseCaseForeCast(weatherRepo: WeatherRepo,lat: Double,lon: Double,apiKey: String):GetForcast{
-        return GetForcast(weatherRepo,lat,lon,apiKey)
+    fun provideUseCaseForeCast(weatherRepo: WeatherRepo):GetForcast{
+        return GetForcast(weatherRepo)
     }
     @Provides
     fun provideUseCaseGetFav(weatherRepo: WeatherRepo):GetFav{
         return GetFav(weatherRepo)
     }
     @Provides
-    fun provideUseCaseAddFav(weatherRepo: WeatherRepo,fav:FavDomainEntity):AddFav{
-        return AddFav(weatherRepo, fav)
+    fun provideUseCaseAddFav(weatherRepo: WeatherRepo):AddFav{
+        return AddFav(weatherRepo)
     }
     @Provides
-    fun provideUseCaseDelFav(weatherRepo: WeatherRepo,fav: FavDomainEntity):DelFav{
-        return DelFav(weatherRepo, fav)
+    fun provideUseCaseDelFav(weatherRepo: WeatherRepo):DelFav{
+        return DelFav(weatherRepo)
     }
 }

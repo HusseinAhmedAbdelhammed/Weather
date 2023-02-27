@@ -6,9 +6,9 @@ import com.example.domain.entity.weather.WeatherResponse
 
 
 interface WeatherRepo {
-    fun getWeatherFromRemote(lat:Double,lon:Double,lang:String,apiKey:String): WeatherResponse
-    fun getForcastFromRemote(lat:Double,lon:Double,apiKey:String):ForcastResponse
-    fun getFavFromLocal():List<FavDomainEntity>
-    fun addFav(fav:FavDomainEntity)
-    fun deleteFav(fav:FavDomainEntity)
+    suspend fun getWeatherFromRemote(lat:Double,lon:Double,lang:String,apiKey:String): WeatherResponse
+    suspend fun getForcastFromRemote(lat:Double,lon:Double,apiKey:String):ForcastResponse
+    suspend fun getFavFromLocal():List<FavDomainEntity>
+    suspend fun addFav(fav:FavDomainEntity)
+    suspend fun deleteFav(fav:FavDomainEntity)
 }

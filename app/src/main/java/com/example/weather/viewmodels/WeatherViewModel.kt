@@ -1,5 +1,7 @@
 package com.example.weather.viewmodels
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.entity.forcast.ForcastResponse
@@ -22,7 +24,7 @@ class WeatherViewModel @Inject constructor (private val getWeatherUseCase:GetWea
             try {
                 _weather.value = getWeatherUseCase(lat,lon,lang,apiKey)
             }catch (e:Exception){
-
+                Log.i("TAG", "getWeather: ${e.message}")
             }
         }
     }
