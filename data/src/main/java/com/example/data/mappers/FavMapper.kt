@@ -12,14 +12,14 @@ object FavMapper {
     }
     fun mapListToEntity(favDomainEntity: List<FavDomainEntity>):List<FavEntity>{
         var list= mutableListOf<FavEntity>()
-        for(i in 0 .. favDomainEntity.size){
+        for(i in 0 .. favDomainEntity.size-1){
             list.add(FavEntity(favDomainEntity.get(i).city,favDomainEntity.get(i).lat,favDomainEntity.get(i).lon))
         }
         return list
     }
     fun mapListFromEntity(favEntity: List<FavEntity>):List<FavDomainEntity>{
         var list= mutableListOf<FavDomainEntity>()
-        for(i in 0 .. favEntity.size){
+        for(i in 0 .. favEntity.size-1){
             list.add(FavDomainEntity(favEntity.get(i).city,favEntity.get(i).lat,favEntity.get(i).lon))
         }
         return list

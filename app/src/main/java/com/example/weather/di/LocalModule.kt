@@ -19,4 +19,7 @@ object LocalModule {
     @Provides
     @Singleton
     fun provideDao(db:FavDatabase)=db.favDao()
+    @Provides
+    @Singleton
+    fun provideHomeDao(db:FavDatabase)=db.homeDao()
 }

@@ -32,4 +32,12 @@ object UseCaseModule {
     fun provideUseCaseDelFav(weatherRepo: WeatherRepo):DelFav{
         return DelFav(weatherRepo)
     }
+    @Provides
+    fun provideUseCaseAddHome(weatherRepo: WeatherRepo):AddHome{
+        return AddHome(weatherRepo)
+    }
+    @Provides
+    fun provideUseCaseGetHome(weatherRepo: WeatherRepo):GetHome{
+        return GetHome(weatherRepo)
+    }
 }

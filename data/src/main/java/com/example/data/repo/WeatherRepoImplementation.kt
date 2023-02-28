@@ -3,8 +3,10 @@ package com.example.data.repo
 import com.example.data.local.FavDatabase
 import com.example.data.local.FavEntity
 import com.example.data.mappers.FavMapper
+import com.example.data.mappers.HomeMapper
 import com.example.data.remote.ApiService
 import com.example.domain.entity.fakeentity.FavDomainEntity
+import com.example.domain.entity.fakeentity.HomeFake
 import com.example.domain.entity.forcast.ForcastResponse
 import com.example.domain.entity.weather.WeatherResponse
 import com.example.domain.repo.WeatherRepo
@@ -28,6 +30,14 @@ class WeatherRepoImplementation(private val apiService: ApiService,private val f
 
     override suspend fun deleteFav(fav: FavDomainEntity) {
        favDB.favDao().deleteFav(FavMapper.mapToEntity(fav))
+    }
+
+    override suspend fun getHomeFromLocal(): List<HomeFake> {
+        return HomeMapper.mapListFromEntity(favDB.homeDao().getHome())
+    }
+
+    override suspend fun addHome(homeFake: HomeFake) {
+        favDB.homeDao().addHome(HomeMapper.mapToEntity(homeFake))
     }
 
 }
