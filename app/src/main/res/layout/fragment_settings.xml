@@ -1,14 +1,319 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.SettingsFragment">
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".ui.notifications.NotificationsFragment">
 
-</FrameLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:focusable="true"
+            android:padding="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="location"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/GPSRbtn"
+                        android:layout_width="70dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="gps"
+                        android:textColor="@drawable/radio_text_selector" />
+
+                    <RadioButton
+                        android:id="@+id/mapRBtn"
+                        android:layout_width="70dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="map"
+                        android:textColor="@drawable/radio_text_selector" />
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="10dp"
+            android:focusable="true"
+            android:padding="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="wind speed"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/windSpeed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/MeterSec"
+                        android:layout_width="70dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="m/s"
+                        android:textColor="@drawable/radio_text_selector" />
+
+                    <RadioButton
+                        android:id="@+id/MileHour"
+                        android:layout_width="70dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="m/h"
+                        android:textColor="@drawable/radio_text_selector" />
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:focusable="true"
+            android:padding="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="temperature"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/temperature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/Celsius"
+                        android:layout_width="70dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="celsius"
+                        android:textColor="@drawable/radio_text_selector" />
+
+                    <RadioButton
+                        android:id="@+id/Kelvin"
+                        android:layout_width="70dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="kelvin"
+                        android:textColor="@drawable/radio_text_selector" />
+
+                    <RadioButton
+                        android:id="@+id/Fahrenheit"
+                        android:layout_width="70dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="fahrenheit"
+                        android:textColor="@drawable/radio_text_selector" />
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:focusable="true"
+            android:padding="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="Language"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/Language"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/arabic"
+                        android:layout_width="70dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="arabic"
+                        android:textColor="@drawable/radio_text_selector" />
+
+                    <RadioButton
+                        android:id="@+id/english"
+                        android:layout_width="70dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="English"
+                        android:textColor="@drawable/radio_text_selector" />
+
+
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:focusable="true"
+            android:padding="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="notification"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/notification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/on"
+                        android:layout_width="70dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="on"
+                        android:textColor="@drawable/radio_text_selector" />
+
+                    <RadioButton
+                        android:id="@+id/off"
+                        android:layout_width="70dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:gravity="center"
+                        android:text="off"
+                        android:textColor="@drawable/radio_text_selector" />
+
+
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+    </LinearLayout>
+</ScrollView>

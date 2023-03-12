@@ -1,7 +1,6 @@
 package com.example.data.repo
 
 import com.example.data.local.FavDatabase
-import com.example.data.local.FavEntity
 import com.example.data.mappers.FavMapper
 import com.example.data.mappers.HomeMapper
 import com.example.data.remote.ApiService
