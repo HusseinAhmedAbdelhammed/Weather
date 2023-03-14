@@ -38,10 +38,11 @@
 
             <ImageButton
                 android:id="@+id/deleteThisRow"
-                android:layout_width="57dp"
-                android:layout_height="60dp"
+                android:layout_width="89dp"
+                android:layout_height="59dp"
                 android:layout_marginEnd="16dp"
                 android:background="@android:color/transparent"
+                android:contentDescription="@string/app_name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

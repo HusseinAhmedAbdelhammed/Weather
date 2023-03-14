@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/testFragment"
+        android:icon="@drawable/home"
+        android:title="home" />
+
+    <item
+        android:id="@+id/favFragment"
+        android:icon="@drawable/fav"
+        android:title="favourites" />
+    <item
+        android:id="@+id/alertFragment"
+        android:icon="@drawable/alert"
+        android:title="alerts" />
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/sett"
+        android:title="settings" />
+
+</menu>

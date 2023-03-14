@@ -3,18 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mapFragment">
+    app:startDestination="@id/testFragment">
 
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.weather.fragments.MapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_testFragment"
+            app:destination="@id/testFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_favFragment"
+            app:destination="@id/favFragment" />
+    </fragment>
     <fragment
         android:id="@+id/testFragment"
         android:name="com.example.weather.fragments.TestFragment"
         android:label="fragment_test"
-        tools:layout="@layout/fragment_test" />
+        tools:layout="@layout/fragment_test" >
+        <action
+            android:id="@+id/action_testFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_testFragment_to_favFragment"
+            app:destination="@id/favFragment" />
+        <action
+            android:id="@+id/action_testFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_testFragment_to_alertFragment"
+            app:destination="@id/alertFragment" />
+        <argument
+            android:name="lat"
+            app:argType="float" />
+        <argument
+            android:name="lon"
+            app:argType="float" />
+    </fragment>
     <fragment
         android:id="@+id/alertFragment"
         android:name="com.example.weather.fragments.AlertFragment"
@@ -24,7 +50,17 @@
         android:id="@+id/favFragment"
         android:name="com.example.weather.fragments.FavFragment"
         android:label="fragment_fav"
-        tools:layout="@layout/fragment_fav" />
+        tools:layout="@layout/fragment_fav" >
+        <action
+            android:id="@+id/action_favFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <argument
+            android:name="flat"
+            app:argType="float" />
+        <argument
+            android:name="flon"
+            app:argType="float" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.weather.fragments.SettingsFragment"

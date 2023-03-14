@@ -15,7 +15,7 @@ import javax.inject.Singleton
 object LocalModule {
     @Provides
     @Singleton
-    fun provideDB(@ApplicationContext context: Context)= Room.databaseBuilder(context,FavDatabase::class.java,"fav_db").build()
+    fun provideDB(@ApplicationContext context: Context)= Room.databaseBuilder(context,FavDatabase::class.java,"fav_db").fallbackToDestructiveMigration().build()
     @Provides
     @Singleton
     fun provideDao(db:FavDatabase)=db.favDao()

@@ -6,41 +6,46 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.example.domain.entity.fakeentity.FavDomainEntity
+import com.example.weather.databinding.ActivityMainBinding
 import com.example.weather.viewmodels.FavViewModel
 import com.example.weather.viewmodels.WeatherViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    lateinit var binding:ActivityMainBinding
 
-    private val viewModel: WeatherViewModel by viewModels()
-    private val viewModel2: FavViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+//        setContentView(R.layout.activity_main)
+//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+//        val navController = navHostFragment.navController
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-//        viewModel.getWeather(29.97371,32.52627,"en","af7545a5decb1cf13fb3c5e0a6307a3a")
-//        lifecycleScope.launch {
-//            viewModel.weather.collect {
-//
-//            }
-//        }
-//        viewModel2.addFavTODB(FavDomainEntity("Suez",33.44,94.04))
-//
-//        viewModel2.getFavList()
-//        lifecycleScope.launch {
-//            viewModel2.favList.collect {
-//            }
-//        }
 
+        val navView: BottomNavigationView = binding.navView
+
+        val navController = findNavController(R.id.nav_host_fragment)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.testFragment, R.id.favFragment, R.id.settingsFragment,R.id.alertFragment
+            )
+        )
+//        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
 
     }
 
