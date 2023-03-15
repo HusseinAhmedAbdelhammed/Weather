@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.domain.entity.fakeentity.FavDomainEntity
 import com.example.weather.databinding.FavouriteRowBinding
+import com.example.weather.fragments.FavFragmentDirections
 import com.example.weather.fragments.FavInterface
+import com.example.weather.helpers.Navigator
 
 class FavAdapter(var context: Context?,var fav:FavInterface): ListAdapter<FavDomainEntity, FavViewHolder>(FavDiffUtil()) {
     lateinit var binding: FavouriteRowBinding
@@ -28,6 +30,14 @@ class FavAdapter(var context: Context?,var fav:FavInterface): ListAdapter<FavDom
 
         })
         holder.binding.textCityFavName.text=current.city
+        holder.binding.cardView.setOnClickListener(object :View.OnClickListener{
+            override fun onClick(v: View?) {
+                Navigator.hasDetails="on"
+                fav.goToDetails(current)
+
+            }
+
+        })
 
     }
 }

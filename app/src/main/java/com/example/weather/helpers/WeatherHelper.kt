@@ -5,6 +5,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object WeatherHelper {
+    var desc=""
+
+    fun setDescr(descr:String){
+        desc=descr
+    }
+    fun getDescr():String{
+        return desc
+    }
     fun getDateTime(dt: Int,language:String): String {
         val formatter = SimpleDateFormat("MMM d", Locale(language))
         formatter.timeZone = TimeZone.getTimeZone("GMT+2")

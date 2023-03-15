@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.entity.forcast.ForcastResponse
 import com.example.domain.entity.weather.WeatherResponse
 import com.example.weather.R
 import com.example.weather.adapters.DailyAdapter
@@ -23,6 +24,7 @@ import com.example.weather.helpers.Consts
 import com.example.weather.helpers.LocationByGPS
 import com.example.weather.helpers.Navigator
 import com.example.weather.helpers.WeatherHelper
+import com.example.weather.viewmodels.FavViewModel
 import com.example.weather.viewmodels.SharedPrefViewModel
 import com.example.weather.viewmodels.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,9 +36,12 @@ class TestFragment : Fragment(),GPSFragmentInterface{
     private val locationPermissionCode = 2
     lateinit var binding:FragmentTestBinding
     private val viewModel: WeatherViewModel by viewModels()
+    private val dbViewModel:FavViewModel by viewModels()
     private val sharedPrefViewModel:SharedPrefViewModel by viewModels()
     lateinit var dailyAdapter: DailyAdapter
     lateinit var hourlyAdapter: HourlyAdapter
+    lateinit var forcastResponse: ForcastResponse
+    lateinit var weatherResponse: WeatherResponse
     val locationByGPS=LocationByGPS(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,7 +113,10 @@ class TestFragment : Fragment(),GPSFragmentInterface{
 
         lifecycleScope.launch{
             viewModel.weather.collect{
+
                 if(it?.name!=null){
+                    weatherResponse=it
+                    WeatherHelper.setDescr(it.weather.get(0).description)
                     binding.tvCity.text=it?.name
                 } else{
                     binding.tvCity.text="null city"
@@ -168,6 +176,7 @@ class TestFragment : Fragment(),GPSFragmentInterface{
         lifecycleScope.launch{
             viewModel.forecast.collect{
                 if(it!=null){
+                    forcastResponse=it
                     val listD=WeatherHelper.getDaily(it,"en")
                     val listH=WeatherHelper.getHourly(it)
                     dailyAdapter= DailyAdapter(requireContext())
@@ -197,6 +206,7 @@ class TestFragment : Fragment(),GPSFragmentInterface{
 }
     fun cameFromMap(weatherResponse: WeatherResponse){
         binding.tvCity.text=weatherResponse.name
+        WeatherHelper.setDescr(weatherResponse.weather.get(0).description)
         when(sharedPrefViewModel.getTemp()){
             Consts.TEMP_F->{binding.tvTemp.text=WeatherHelper.fromCtoF(weatherResponse.main.temp).toString()
                 binding.tvHomeTempDisc.text="F"
@@ -215,6 +225,11 @@ class TestFragment : Fragment(),GPSFragmentInterface{
                 binding.tvWindSpeed.text=WeatherHelper.fromMStoMH(weatherResponse.wind.speed).toString()
             }
         }
+        binding.tvHomeWeatherDescription.text=weatherResponse.weather.get(0).description
+        binding.tvPressure.text=weatherResponse.main.pressure.toString()
+        binding.tvHumidity.text=weatherResponse.main.humidity.toString()
+        binding.tvClouds.text=weatherResponse.clouds.all.toString()
+        binding.tvUVI.text=weatherResponse.rain.`1h`.toString()
         viewModel.getForecast(weatherResponse.coord.lat,weatherResponse.coord.lon,Consts.API_KEY)
         lifecycleScope.launch{
             viewModel.forecast.collect{
@@ -246,4 +261,9 @@ class TestFragment : Fragment(),GPSFragmentInterface{
         }
 
 
-    }}
+    }
+    fun saveHome(weatherResponse: WeatherResponse,forcastResponse: ForcastResponse){
+
+    }
+
+}

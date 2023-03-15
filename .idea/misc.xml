@@ -3,12 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/sonic/Desktop/WeatherPro/Weather/app/src/main/res/layout/activity_alarm.xml" value="0.1838768115942029" />
         <entry key="..\:/Users/sonic/Desktop/WeatherPro/Weather/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/sonic/Desktop/WeatherPro/Weather/app/src/main/res/layout/daily_raw.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/sonic/Desktop/WeatherPro/Weather/app/src/main/res/layout/favourite_row.xml" value="0.25" />
+        <entry key="..\:/Users/sonic/Desktop/WeatherPro/Weather/app/src/main/res/layout/fragment_alert.xml" value="0.1838768115942029" />
+        <entry key="..\:/Users/sonic/Desktop/WeatherPro/Weather/app/src/main/res/layout/fragment_fav_details.xml" value="0.1" />
         <entry key="..\:/Users/sonic/Desktop/WeatherPro/Weather/app/src/main/res/layout/fragment_settings.xml" value="0.22" />
         <entry key="..\:/Users/sonic/Desktop/WeatherPro/Weather/app/src/main/res/layout/fragment_test.xml" value="0.15431472081218275" />
         <entry key="..\:/Users/sonic/Desktop/WeatherPro/Weather/app/src/main/res/layout/hourly_item.xml" value="0.22" />
+        <entry key="..\:/Users/sonic/Desktop/WeatherPro/Weather/app/src/main/res/layout/time_alert.xml" value="0.33" />
       </map>
     </option>
   </component>

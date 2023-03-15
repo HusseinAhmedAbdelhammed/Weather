@@ -60,10 +60,24 @@
         <argument
             android:name="flon"
             app:argType="float" />
+        <action
+            android:id="@+id/action_favFragment_to_favDetailsFragment"
+            app:destination="@id/favDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.weather.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/favDetailsFragment"
+        android:name="com.example.weather.fragments.FavDetailsFragment"
+        android:label="fragment_fav_details"
+        tools:layout="@layout/fragment_fav_details" >
+        <argument
+            android:name="fdlat"
+            app:argType="float" />
+        <argument android:name="fdlon"
+            app:argType="float" />
+    </fragment>
 </navigation>

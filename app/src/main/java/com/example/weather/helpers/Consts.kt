@@ -31,5 +31,6 @@ object Consts {
     val FROM_MAP_TO_FAV="honey I'm fav"
     val FROM_MAP_TO_TEST="honey I'm home"
     val API_KEY="af7545a5decb1cf13fb3c5e0a6307a3a"
+    val WETDESC="WETDESC"
 
 }

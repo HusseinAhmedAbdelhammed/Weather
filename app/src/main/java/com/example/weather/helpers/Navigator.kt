@@ -4,6 +4,7 @@ object Navigator {
     var dir=""
     var myArrival=""
     var hasEntered=""
+    var hasDetails=""
     fun moveFromTestToMap(){
         dir=Consts.DIRECTION_SET
     }

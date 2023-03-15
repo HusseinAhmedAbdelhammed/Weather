@@ -46,6 +46,7 @@ class FavFragment : Fragment(),FavInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Navigator.hasDetails=""
         viewModel.getFavList()
         lifecycleScope.launch {
             viewModel.favList.collect{
@@ -99,5 +100,12 @@ class FavFragment : Fragment(),FavInterface {
                 favAdapter.submitList(it)
             }
         }
+    }
+
+    override fun goToDetails(fav: FavDomainEntity) {
+        if(Navigator.hasDetails=="on"){
+        val action = FavFragmentDirections.actionFavFragmentToFavDetailsFragment(fav.lat.toFloat(),
+           fav.lon.toFloat())
+        this.findNavController().navigate(action)}
     }
 }
