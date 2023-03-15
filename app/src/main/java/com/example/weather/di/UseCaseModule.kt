@@ -40,4 +40,16 @@ object UseCaseModule {
     fun provideUseCaseGetHome(weatherRepo: WeatherRepo):GetHome{
         return GetHome(weatherRepo)
     }
+    @Provides
+    fun provideUseCaseAddAlert(weatherRepo: WeatherRepo):AddAlert{
+        return AddAlert(weatherRepo)
+    }
+    @Provides
+    fun provideUseCaseDelAlert(weatherRepo: WeatherRepo):DelAlert{
+        return DelAlert(weatherRepo)
+    }
+    @Provides
+    fun provideUseCaseGetAlert(weatherRepo: WeatherRepo):GetAlerts{
+        return GetAlerts(weatherRepo)
+    }
 }

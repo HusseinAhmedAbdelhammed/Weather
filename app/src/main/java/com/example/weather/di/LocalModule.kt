@@ -22,4 +22,7 @@ object LocalModule {
     @Provides
     @Singleton
     fun provideHomeDao(db:FavDatabase)=db.homeDao()
+    @Provides
+    @Singleton
+    fun provideAlertDao(db: FavDatabase)=db.alertDao()
 }

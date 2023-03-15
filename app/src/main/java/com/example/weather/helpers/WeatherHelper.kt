@@ -103,5 +103,15 @@ object WeatherHelper {
     fun fromMHtoMS(mh:Double):Double{
         return mh*.447
     }
+    fun getDateTimeLong(milliSeconds: Long, pattern: String, language: String): String {
+        val formatter = SimpleDateFormat(pattern, Locale(language))
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = milliSeconds
+        return formatter.format(calendar.time)
+    }
+    fun decompressObject(obj:String):List<String>{
+       val list=obj.split(Consts.OBJECT_DELEMETER)
+        return list
+    }
 
 }

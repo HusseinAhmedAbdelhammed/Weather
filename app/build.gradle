@@ -17,7 +17,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.example.weather.HiltTestRunner"
     }
 
     buildTypes {
@@ -83,9 +83,18 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:$nav_version"
     implementation "de.hdodenhof:circleimageview:3.1.0"
     implementation 'com.squareup.picasso:picasso:2.8'
+    implementation 'com.airbnb.android:lottie:6.0.0'
     implementation project(path: ':domain')
     implementation project(path: ':data')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // Instrumented Unit Tests
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1"
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+    androidTestImplementation "com.google.truth:truth:1.0.1"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation "org.mockito:mockito-core:2.21.0"
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.28-alpha'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
 }

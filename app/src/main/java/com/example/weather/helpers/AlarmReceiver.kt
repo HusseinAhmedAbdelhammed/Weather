@@ -12,6 +12,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val string=intent.getStringExtra(Consts.WETDESC).toString()
         val newIntent=Intent(context,AlarmActivity::class.java)
         newIntent.putExtra(Consts.WETDESC,string)
+        newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(newIntent)
 
     }

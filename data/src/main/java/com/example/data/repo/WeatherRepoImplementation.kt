@@ -1,9 +1,11 @@
 package com.example.data.repo
 
 import com.example.data.local.FavDatabase
+import com.example.data.mappers.AlertMapper
 import com.example.data.mappers.FavMapper
 import com.example.data.mappers.HomeMapper
 import com.example.data.remote.ApiService
+import com.example.domain.entity.fakeentity.AlertDomainEntity
 import com.example.domain.entity.fakeentity.FavDomainEntity
 import com.example.domain.entity.fakeentity.HomeFake
 import com.example.domain.entity.forcast.ForcastResponse
@@ -37,6 +39,18 @@ class WeatherRepoImplementation(private val apiService: ApiService,private val f
 
     override suspend fun addHome(homeFake: HomeFake) {
         favDB.homeDao().addHome(HomeMapper.mapToEntity(homeFake))
+    }
+
+    override suspend fun addAlert(alertDomainEntity: AlertDomainEntity) {
+        favDB.alertDao().addAlert(AlertMapper.mapToEntity(alertDomainEntity))
+    }
+
+    override suspend fun getAlert(): List<AlertDomainEntity> {
+        return AlertMapper.mapListFromEntity(favDB.alertDao().getAllAlerts())
+    }
+
+    override suspend fun deleteAlert(alertDomainEntity: AlertDomainEntity) {
+        favDB.alertDao().deleteAlert(AlertMapper.mapToEntity(alertDomainEntity))
     }
 
 }

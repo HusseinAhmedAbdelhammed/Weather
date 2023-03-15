@@ -1,5 +1,6 @@
 package com.example.domain.repo
 
+import com.example.domain.entity.fakeentity.AlertDomainEntity
 import com.example.domain.entity.fakeentity.FavDomainEntity
 import com.example.domain.entity.fakeentity.HomeFake
 import com.example.domain.entity.forcast.ForcastResponse
@@ -14,5 +15,8 @@ interface WeatherRepo {
     suspend fun deleteFav(fav:FavDomainEntity)
     suspend fun getHomeFromLocal():List<HomeFake>
     suspend fun addHome(homeFake: HomeFake)
+    suspend fun addAlert(alertDomainEntity: AlertDomainEntity)
+    suspend fun getAlert():List<AlertDomainEntity>
+    suspend fun deleteAlert(alertDomainEntity: AlertDomainEntity)
 
 }

@@ -20,7 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_gray"
+            android:background="#C3C3C0"
             android:padding="8dp">
 
             <TextView
@@ -30,8 +30,8 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
-                android:text="@string/weather_alert"
-                android:textColor="@color/primary"
+                android:text="alert"
+                android:textColor="#8BC34A"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/btn"
@@ -54,8 +54,8 @@
                     android:id="@+id/btnDismiss"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/primary"
-                    android:text="@string/dismiss"
+                    android:background="#8BC34A"
+                    android:text="Dismiss"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"

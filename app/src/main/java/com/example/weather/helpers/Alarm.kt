@@ -18,7 +18,7 @@ class Alarm(var activity:Activity) {
         alarmMgr = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmIntent = Intent(activity, AlarmReceiver::class.java).let { intent ->
             intent.putExtra(Consts.WETDESC,WeatherHelper.getDescr())
-            PendingIntent.getBroadcast(activity, 0, intent,  0)
+            PendingIntent.getBroadcast(activity, 0, intent,  PendingIntent.FLAG_UPDATE_CURRENT)
         }
         //PendingIntent.FLAG_UPDATE_CURRENT try it if 0 didin't work
 
