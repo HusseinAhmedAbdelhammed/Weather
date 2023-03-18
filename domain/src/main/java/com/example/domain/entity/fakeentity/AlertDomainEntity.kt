@@ -1,3 +1,3 @@
 package com.example.domain.entity.fakeentity
 
-data class AlertDomainEntity (var startTime:Long,var endTime:Long,var option:String)
+data class AlertDomainEntity (var id:String,var startTime:Long,var endTime:Long,var option:String)

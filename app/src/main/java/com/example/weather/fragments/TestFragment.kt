@@ -1,8 +1,10 @@
 package com.example.weather.fragments
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -66,6 +68,7 @@ class TestFragment : Fragment(),GPSFragmentInterface{
             homeViewModel.getHomeList()
             lifecycleScope.launch {
                 homeViewModel.homeList.collect{
+                    if(it!=null){
                     fakeHome= it?.get(0)!!
                     val listD=WeatherHelper.decompressObject(fakeHome.dailyList)
                     val listH=WeatherHelper.decompressObject(fakeHome.hourlyList)
@@ -83,9 +86,9 @@ class TestFragment : Fragment(),GPSFragmentInterface{
                         }
                     }
                     when(sharedPrefViewModel.getWindSpeed()){
-                        Consts.WIND_MS->{binding.tvWindSpeed.text=weatherResponse.wind.speed.toString()}
+                        Consts.WIND_MS->{binding.tvWindSpeed.text=fakeHome.windSpeed.toString()}
                         else->{
-                            binding.tvWindSpeed.text=WeatherHelper.fromMStoMH(weatherResponse.wind.speed).toString()
+                            binding.tvWindSpeed.text=WeatherHelper.fromMStoMH(fakeHome.windSpeed).toString()
                         }
                     }
                     binding.tvHomeWeatherDescription.text=WeatherHelper.getDescr()
@@ -113,7 +116,7 @@ class TestFragment : Fragment(),GPSFragmentInterface{
                     }
 
 
-                }
+                }}
 
             }
 
@@ -160,21 +163,31 @@ class TestFragment : Fragment(),GPSFragmentInterface{
         if (requestCode == locationPermissionCode) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(requireContext(), "Permission Granted", Toast.LENGTH_SHORT).show()
+                locationByGPS.getLocation(requireActivity())
+
             }
             else {
                 Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show()
+                val intentd= Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                startActivity(intentd)
+
             }
         }
     }
 
     override fun setLatAndLon(lat: Double, lon: Double) {
-        viewModel.getWeather(lat,lon,"en",Consts.API_KEY)
+        if(sharedPrefViewModel.getLang()==Consts.LANG_EN){
+            viewModel.getWeather(lat,lon,"en",Consts.API_KEY)
+        }else{
+            viewModel.getWeather(lat,lon,"ar",Consts.API_KEY)
+        }
+
 
         lifecycleScope.launch{
             viewModel.weather.collect{
-
+                if(it!=null){
                 if(it?.name!=null){
-                    weatherResponse=it
+                    weatherResponse=it!!
                     WeatherHelper.setDescr(it.weather.get(0).description)
                     binding.tvCity.text=it?.name
                 } else{
@@ -229,7 +242,7 @@ class TestFragment : Fragment(),GPSFragmentInterface{
                 }else{
                     binding.tvUVI.text="0"
                 }
-            }
+            }}
         }
         viewModel.getForecast(lat,lon,Consts.API_KEY)
         lifecycleScope.launch{
@@ -256,12 +269,13 @@ class TestFragment : Fragment(),GPSFragmentInterface{
                             orientation= RecyclerView.HORIZONTAL
                         }
                     }
+                    saveHome(weatherResponse, forcastResponse)
                 }
 
 
         }
     }
-        saveHome(weatherResponse, forcastResponse)
+//
 
 }
     fun cameFromMap(weatherResponse: WeatherResponse){
@@ -289,7 +303,7 @@ class TestFragment : Fragment(),GPSFragmentInterface{
         binding.tvPressure.text=weatherResponse.main.pressure.toString()
         binding.tvHumidity.text=weatherResponse.main.humidity.toString()
         binding.tvClouds.text=weatherResponse.clouds.all.toString()
-        binding.tvUVI.text=weatherResponse.rain.`1h`.toString()
+        binding.tvUVI.text="0"
         viewModel.getForecast(weatherResponse.coord.lat,weatherResponse.coord.lon,Consts.API_KEY)
         lifecycleScope.launch{
             viewModel.forecast.collect{
@@ -331,7 +345,7 @@ class TestFragment : Fragment(),GPSFragmentInterface{
             val stringH=WeatherHelper.compainObject(listH)
             val fake=HomeFake(weatherResponse.id,weatherResponse.main.temp,weatherResponse.name,weatherResponse.main.pressure,
                 weatherResponse.main.humidity,weatherResponse.visibility,weatherResponse.clouds.all,weatherResponse.weather.get(0).icon,
-            stringD,stringH)
+            stringD,stringH,weatherResponse.wind.speed)
             lifecycleScope.launch {
                 homeViewModel.addFavTODB(fake)
             }
@@ -343,7 +357,7 @@ class TestFragment : Fragment(),GPSFragmentInterface{
             val stringH=WeatherHelper.compainObject(listH)
             val fake=HomeFake(weatherResponse.id,weatherResponse.main.temp,weatherResponse.name,weatherResponse.main.pressure,
                 weatherResponse.main.humidity,weatherResponse.visibility,weatherResponse.clouds.all,weatherResponse.weather.get(0).icon,
-                stringD,stringH)
+                stringD,stringH,weatherResponse.wind.speed)
             lifecycleScope.launch {
                 homeViewModel.addFavTODB(fake)
             }

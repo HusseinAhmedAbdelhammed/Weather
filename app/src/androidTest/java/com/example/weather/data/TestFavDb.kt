@@ -1,26 +1,30 @@
 package com.example.weather.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import com.example.data.local.FavDao
 import com.example.data.local.FavDatabase
 import com.example.data.local.FavEntity
+import com.google.ar.core.Config
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 import javax.inject.Inject
 import javax.inject.Named
 
 @ExperimentalCoroutinesApi
 @SmallTest
 @HiltAndroidTest
+@RunWith(AndroidJUnit4::class)
 class TestFavDb {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)

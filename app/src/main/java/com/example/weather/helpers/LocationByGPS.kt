@@ -29,8 +29,9 @@ class LocationByGPS(val gps: GPSFragmentInterface): Application(),LocationListen
     }
 
     override fun onLocationChanged(p0: Location) {
+        if(p0!=null){
         gps.setLatAndLon(p0.latitude,p0.longitude)
-    }
+    }}
 
 
 

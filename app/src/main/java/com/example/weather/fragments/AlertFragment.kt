@@ -120,7 +120,7 @@ lateinit var dialog:Dialog
             } else if (endDateid.text.toString().isEmpty()) {
                 endDateid.error = "Field is required"
             } else {
-                val userAlerts = AlertDomainEntity(startLongDate, endLongDate, option)
+                val userAlerts = AlertDomainEntity(option+startLongDate.toString()+endLongDate.toString(),startLongDate, endLongDate, option)
                 lifecycleScope.launch {
                     viewModel.addAlertTODB(userAlerts)
                 }
