@@ -18,6 +18,8 @@ import com.example.weather.databinding.FragmentFavBinding
 import com.example.weather.databinding.FragmentTestBinding
 import com.example.weather.helpers.Consts
 import com.example.weather.helpers.Navigator
+import com.example.weather.helpers.state.ApiState
+import com.example.weather.helpers.state.FavState
 import com.example.weather.viewmodels.FavViewModel
 import com.example.weather.viewmodels.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,14 +52,29 @@ class FavFragment : Fragment(),FavInterface {
         viewModel.getFavList()
         lifecycleScope.launch {
             viewModel.favList.collect{
-                favAdapter= FavAdapter(requireContext(),this@FavFragment)
-                favAdapter.submitList(it)
-                binding.favRecyclerView.apply {
-                    adapter=favAdapter
-                    layoutManager= LinearLayoutManager(context).apply {
-                        orientation= RecyclerView.VERTICAL
+               when(it){
+                    is FavState.Success->{
+                        binding.constLayFav.visibility=View.VISIBLE
+                        binding.favProgressBar.visibility=View.GONE
+                        favAdapter= FavAdapter(requireContext(),this@FavFragment)
+                        favAdapter.submitList(it.data)
+                        binding.favRecyclerView.apply {
+                            adapter=favAdapter
+                            layoutManager= LinearLayoutManager(context).apply {
+                                orientation= RecyclerView.VERTICAL
+                            }
+                        }
                     }
-                }
+                   is FavState.Loading->{
+                        binding.constLayFav.visibility=View.GONE
+                        binding.favProgressBar.visibility=View.VISIBLE
+
+                   }
+                   else ->{
+                       Toast.makeText(requireContext(),"Data Failed",Toast.LENGTH_LONG).show()
+                   }
+               }
+
             }
         }
         Navigator.hasEntered=""
@@ -67,15 +84,43 @@ class FavFragment : Fragment(),FavInterface {
                     FavFragmentArgs.fromBundle(requireArguments()).flon.toDouble(),"en",Consts.API_KEY)
                 lifecycleScope.launch{
                     viewModel2.weather.collect{
-                        if(it?.name!=null){
-                            viewModel.addFavTODB(FavDomainEntity(it?.name!!,FavFragmentArgs.fromBundle(requireArguments()).flat.toDouble()
-                            ,FavFragmentArgs.fromBundle(requireArguments()).flon.toDouble()))
-                            Toast.makeText(requireContext(),"added",Toast.LENGTH_LONG).show()
-                            viewModel.getFavList()
-                            viewModel.favList.collect{
-                                favAdapter.submitList(it)
+                        when(it){
+                            is ApiState.Success->{
+                                binding.constLayFav.visibility=View.VISIBLE
+                                binding.favProgressBar.visibility=View.GONE
+                                if(it.data.name!=null){
+                                    viewModel.addFavTODB(FavDomainEntity(it.data.name,FavFragmentArgs.fromBundle(requireArguments()).flat.toDouble()
+                                        ,FavFragmentArgs.fromBundle(requireArguments()).flon.toDouble()))
+                                    Toast.makeText(requireContext(),"added",Toast.LENGTH_LONG).show()
+                                    viewModel.getFavList()
+                                    viewModel.favList.collect{
+                                        when(it){
+                                            is FavState.Success->{
+                                                binding.constLayFav.visibility=View.VISIBLE
+                                                binding.favProgressBar.visibility=View.GONE
+                                                favAdapter.submitList(it.data)
+                                            }
+                                            is FavState.Loading->{
+                                                binding.constLayFav.visibility=View.GONE
+                                                binding.favProgressBar.visibility=View.VISIBLE
+                                            }
+                                            else ->{
+                                                Toast.makeText(requireContext(),"Data Failed",Toast.LENGTH_LONG).show()
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+                            is ApiState.Loading->{
+                                binding.constLayFav.visibility=View.GONE
+                                binding.favProgressBar.visibility=View.VISIBLE
+                            }
+                            else->{
+                                Toast.makeText(requireContext(),"Data Failed",Toast.LENGTH_LONG).show()
                             }
                         }
+
                     }
                 }
 
@@ -95,10 +140,12 @@ class FavFragment : Fragment(),FavInterface {
 
         lifecycleScope.launch {
             viewModel.delFavFromDB(fav)
-            viewModel.getFavList()
-            viewModel.favList.collect{
-                favAdapter.submitList(it)
-            }
+//            viewModel.getFavList()
+//            viewModel.favList.collect{
+//                if(it is FavState.Success){
+//                    favAdapter.submitList(it.data)
+//                }
+//            }
         }
     }
 

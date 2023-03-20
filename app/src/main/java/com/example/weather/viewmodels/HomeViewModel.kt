@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.entity.fakeentity.FavDomainEntity
 import com.example.domain.entity.fakeentity.HomeFake
 import com.example.domain.usecase.*
+import com.example.weather.helpers.state.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,14 +17,14 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel@Inject constructor(private val getHome: GetHome, private val addHome: AddHome):
     ViewModel() {
-    private val _homeList: MutableStateFlow<List<HomeFake>?> = MutableStateFlow(null)
-    val homeList: StateFlow<List<HomeFake>?> = _homeList
+    private val _homeList: MutableStateFlow<HomeState> = MutableStateFlow(HomeState.Loading)
+    val homeList: StateFlow<HomeState> = _homeList
     fun getHomeList(){
         viewModelScope.launch(Dispatchers.IO){
             try {
-                _homeList.value=getHome()
+                getHome().collect{_homeList.value=HomeState.Success(it)}
             }catch (e:Exception){
-                Log.i("SONIC", "getFavList: ${e.message}")
+                _homeList.value=HomeState.Failure(e)
             }
         }
     }

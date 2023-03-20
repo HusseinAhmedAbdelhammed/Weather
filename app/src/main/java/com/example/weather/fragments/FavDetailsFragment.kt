@@ -16,6 +16,8 @@ import com.example.weather.adapters.HourlyAdapter
 import com.example.weather.databinding.FragmentFavDetailsBinding
 import com.example.weather.helpers.Consts
 import com.example.weather.helpers.WeatherHelper
+import com.example.weather.helpers.state.ApiState
+import com.example.weather.helpers.state.ForcastState
 import com.example.weather.viewmodels.SharedPrefViewModel
 import com.example.weather.viewmodels.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,67 +54,89 @@ class FavDetailsFragment : Fragment() {
             }
                 lifecycleScope.launch{
                     viewModel.weather.collect{
-                        if(it!=null) {
-                            binding.tvFCity.text = it?.name
-                            when (sharedPrefViewModel.getTemp()) {
-                                Consts.TEMP_F -> {
-                                    binding.tvFTemp.text =
-                                        WeatherHelper.fromCtoF(it?.main?.temp!!).toString()
-                                    //binding.tvFHomeTempDisc.text="F"
+                        when(it) {
+                            is ApiState.Success->{
+                                binding.parentView.visibility=View.VISIBLE
+                                binding.HomeFprogressBar.visibility=View.GONE
+                                binding.tvFCity.text = it.data.name
+                                when (sharedPrefViewModel.getTemp()) {
+                                    Consts.TEMP_F -> {
+                                        binding.tvFTemp.text =
+                                            WeatherHelper.fromCtoF(it.data.main.temp).toString()
+                                        //binding.tvFHomeTempDisc.text="F"
+                                    }
+                                    Consts.TEMP_K -> {
+                                        binding.tvFTemp.text =
+                                            WeatherHelper.fromCtoK(it.data.main.temp).toString()
+                                        //binding.tvFHomeTempDisc.text="K"
+                                    }
+                                    else -> {
+                                        binding.tvFTemp.text = it.data.main.temp.toString()
+                                        binding.tvFHomeTempDisc.text = "C"
+                                    }
                                 }
-                                Consts.TEMP_K -> {
-                                    binding.tvFTemp.text =
-                                        WeatherHelper.fromCtoK(it?.main?.temp!!).toString()
-                                    //binding.tvFHomeTempDisc.text="K"
+                                when (sharedPrefViewModel.getWindSpeed()) {
+                                    Consts.WIND_MS -> {
+                                        binding.tvFWindSpeed.text = it.data.wind.speed.toString()
+                                    }
+                                    else -> {
+                                        binding.tvFWindSpeed.text =
+                                            WeatherHelper.fromMStoMH(it.data.wind.speed).toString()
+                                    }
                                 }
-                                else -> {
-                                    binding.tvFTemp.text = it?.main?.temp.toString()
-                                    binding.tvFHomeTempDisc.text = "C"
-                                }
+                                binding.tvFPressure.text = it.data.main.pressure.toString()
+                                binding.tvFHomeWeatherDescription.text =
+                                    it.data.weather.get(0).description
+                                binding.tvFHumidity.text = it.data.main.humidity.toString()
+                                binding.tvFClouds.text = it.data.clouds.all.toString()
+                                binding.tvFUVI.text = it.data.rain.`1h`.toString()
                             }
-                            when (sharedPrefViewModel.getWindSpeed()) {
-                                Consts.WIND_MS -> {
-                                    binding.tvFWindSpeed.text = it?.wind?.speed.toString()
-                                }
-                                else -> {
-                                    binding.tvFWindSpeed.text =
-                                        WeatherHelper.fromMStoMH(it?.wind?.speed!!).toString()
-                                }
+                            is ApiState.Loading->{
+                                binding.parentView.visibility=View.GONE
+                                binding.HomeFprogressBar.visibility=View.VISIBLE
                             }
-                            binding.tvFPressure.text = it?.main?.pressure.toString()
-                            binding.tvFHomeWeatherDescription.text =
-                                it?.weather?.get(0)?.description
-                            binding.tvFHumidity.text = it?.main?.humidity.toString()
-                            binding.tvFClouds.text = it?.clouds?.all.toString()
-                            binding.tvFUVI.text = it?.rain?.`1h`.toString()
+                            else ->{
+                                Toast.makeText(requireContext(),"Data Failed", Toast.LENGTH_LONG).show()
+                            }
                         }
                     }
                 }
                 viewModel.getForecast(lat.toDouble(),lon.toDouble(),Consts.API_KEY)
                 lifecycleScope.launch {
                     viewModel.forecast.collect{
-                        if(it!=null){
+                        when(it){
+                            is ForcastState.Success->{
+                                binding.parentView.visibility=View.VISIBLE
+                                binding.HomeFprogressBar.visibility=View.GONE
+                                val listD=WeatherHelper.getDaily(it.data,"en")
+                                val listH=WeatherHelper.getHourly(it.data)
+                                dailyAdapter= DailyAdapter(requireContext())
+                                dailyAdapter.submitList(listD)
+                                binding.recyclerFViewDaily.apply {
+                                    adapter=dailyAdapter
+                                    layoutManager= LinearLayoutManager(context).apply {
+                                        orientation= RecyclerView.VERTICAL
+                                    }
 
-                            val listD=WeatherHelper.getDaily(it,"en")
-                            val listH=WeatherHelper.getHourly(it)
-                            dailyAdapter= DailyAdapter(requireContext())
-                            dailyAdapter.submitList(listD)
-                            binding.recyclerFViewDaily.apply {
-                                adapter=dailyAdapter
-                                layoutManager= LinearLayoutManager(context).apply {
-                                    orientation= RecyclerView.VERTICAL
+
                                 }
-
-
-                            }
-                            hourlyAdapter= HourlyAdapter(requireContext())
-                            hourlyAdapter.submitList(listH)
-                            binding.recyclerFViewHourly.apply {
-                                adapter=hourlyAdapter
-                                layoutManager= LinearLayoutManager(context).apply {
-                                    orientation= RecyclerView.HORIZONTAL
+                                hourlyAdapter= HourlyAdapter(requireContext())
+                                hourlyAdapter.submitList(listH)
+                                binding.recyclerFViewHourly.apply {
+                                    adapter=hourlyAdapter
+                                    layoutManager= LinearLayoutManager(context).apply {
+                                        orientation= RecyclerView.HORIZONTAL
+                                    }
                                 }
                             }
+                            is ForcastState.Loading->{
+                                binding.parentView.visibility=View.GONE
+                                binding.HomeFprogressBar.visibility=View.VISIBLE
+                            }
+                            else ->{
+                                Toast.makeText(requireContext(),"Data Failed", Toast.LENGTH_LONG).show()
+                            }
+
                         }
                     }
                 }

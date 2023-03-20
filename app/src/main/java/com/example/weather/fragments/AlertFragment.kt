@@ -11,10 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -27,6 +24,7 @@ import com.example.weather.databinding.FragmentAlertBinding
 import com.example.weather.databinding.FragmentFavDetailsBinding
 import com.example.weather.helpers.Alarm
 import com.example.weather.helpers.Consts
+import com.example.weather.helpers.state.AlertState
 import com.example.weather.viewmodels.AlertViewModel
 import com.example.weather.viewmodels.SharedPrefViewModel
 import com.example.weather.viewmodels.WeatherViewModel
@@ -75,13 +73,27 @@ lateinit var dialog:Dialog
         lifecycleScope.launch {
             alertsAdapter= AlertsAdapter(requireContext(),this@AlertFragment)
             viewModel.alertList.collect{
-                alertsAdapter.submitList(it)
-                binding.alertsRecyclerView.apply {
-                    adapter=alertsAdapter
-                    layoutManager= LinearLayoutManager(context).apply {
-                        orientation= RecyclerView.VERTICAL
+                when(it){
+                    is AlertState.Success->{
+                        binding.alertProgressBar.visibility=View.GONE
+                        binding.alertConstr.visibility=View.VISIBLE
+                        alertsAdapter.submitList(it.data)
+                        binding.alertsRecyclerView.apply {
+                            adapter=alertsAdapter
+                            layoutManager= LinearLayoutManager(context).apply {
+                                orientation= RecyclerView.VERTICAL
+                            }
+                        }
+                    }
+                    is AlertState.Loading->{
+                        binding.alertConstr.visibility=View.GONE
+                        binding.alertProgressBar.visibility=View.VISIBLE
+                    }
+                    else ->{
+                        Toast.makeText(requireContext(),"Data Failed", Toast.LENGTH_LONG).show()
                     }
                 }
+
             }
         }
         dialog = Dialog(requireContext())
@@ -127,7 +139,9 @@ lateinit var dialog:Dialog
                 viewModel.getAlertList()
                 lifecycleScope.launch {
                     viewModel.alertList.collect{
-                        alertsAdapter.submitList(it)
+                        if(it is AlertState.Success){
+                            alertsAdapter.submitList(it.data)
+                        }
 
                     }
                 }

@@ -18,10 +18,14 @@ object FavMapper {
         return list
     }
     fun mapListFromEntity(favEntity: List<FavEntity>):List<FavDomainEntity>{
+
         var list= mutableListOf<FavDomainEntity>()
+        if(favEntity.isEmpty()||favEntity==null){
+            list.add(FavDomainEntity("Test",33.055,34.221))
+        }else{
         for(i in 0 .. favEntity.size-1){
             list.add(FavDomainEntity(favEntity.get(i).city,favEntity.get(i).lat,favEntity.get(i).lon))
-        }
+        }}
         return list
     }
 }
